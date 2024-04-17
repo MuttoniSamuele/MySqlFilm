@@ -64,6 +64,34 @@ namespace MySqlFilm
 			{
 				conn.Close();
 			}
+			try
+			{
+				conn.Open();
+				MySqlCommand cmd = new MySqlCommand(
+					@"SELECT
+					  attori.nome AS 'Nome',
+					  attori.cognome AS 'Cognome',
+					  COUNT(CASE WHEN recitare.ruolo = 'Protagonista' THEN 1 END) AS 'Protagonista',
+					  COUNT(CASE WHEN recitare.ruolo <> 'Protagonista' THEN 1 END) AS 'Non protagonista'
+					FROM attori
+					LEFT JOIN recitare ON attori.id_attore = recitare.id_attore
+					GROUP BY attori.id_attore, attori.nome, attori.cognome
+					ORDER BY Nome, Cognome;",
+					conn
+				);
+				MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+				DataTable dt = new DataTable();
+				adapter.Fill(dt);
+				dataGridViewProtag.DataSource = dt;
+			}
+			catch
+			{
+				showError("Impossibile comunicare con il database");
+			}
+			finally
+			{
+				conn.Close();
+			}
 		}
 
 		private void Form1_Load(object sender, EventArgs e)

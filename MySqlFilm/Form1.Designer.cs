@@ -50,26 +50,20 @@
 			this.txtName = new ReaLTaiizor.Controls.HopeTextBox();
 			this.cmbGenre = new ReaLTaiizor.Controls.HopeComboBox();
 			this.dataGridViewFilms = new System.Windows.Forms.DataGridView();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.dataGridView2 = new System.Windows.Forms.DataGridView();
+			this.dataGridViewProtag = new System.Windows.Forms.DataGridView();
 			this.hopeTabPage1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.grpUpdate.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
 			this.tabPage5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridViewProtag)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// hopeTabPage1
 			// 
 			this.hopeTabPage1.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(55)))), ((int)(((byte)(66)))));
 			this.hopeTabPage1.Controls.Add(this.tabPage1);
-			this.hopeTabPage1.Controls.Add(this.tabPage2);
-			this.hopeTabPage1.Controls.Add(this.tabPage3);
-			this.hopeTabPage1.Controls.Add(this.tabPage4);
 			this.hopeTabPage1.Controls.Add(this.tabPage5);
 			this.hopeTabPage1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.hopeTabPage1.Font = new System.Drawing.Font("Segoe UI", 12F);
@@ -485,37 +479,9 @@
 			this.dataGridViewFilms.TabIndex = 0;
 			this.dataGridViewFilms.SelectionChanged += new System.EventHandler(this.dataGridViewFilms_SelectionChanged);
 			// 
-			// tabPage2
-			// 
-			this.tabPage2.Location = new System.Drawing.Point(0, 40);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(800, 584);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Attori";
-			this.tabPage2.UseVisualStyleBackColor = true;
-			// 
-			// tabPage3
-			// 
-			this.tabPage3.Location = new System.Drawing.Point(0, 40);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Size = new System.Drawing.Size(800, 584);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "Generi";
-			this.tabPage3.UseVisualStyleBackColor = true;
-			// 
-			// tabPage4
-			// 
-			this.tabPage4.Location = new System.Drawing.Point(0, 40);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Size = new System.Drawing.Size(800, 584);
-			this.tabPage4.TabIndex = 3;
-			this.tabPage4.Text = "Attori - Film";
-			this.tabPage4.UseVisualStyleBackColor = true;
-			// 
 			// tabPage5
 			// 
-			this.tabPage5.Controls.Add(this.dataGridView2);
+			this.tabPage5.Controls.Add(this.dataGridViewProtag);
 			this.tabPage5.Location = new System.Drawing.Point(0, 40);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -523,13 +489,16 @@
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "Attori Protag";
 			// 
-			// dataGridView2
+			// dataGridViewProtag
 			// 
-			this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView2.Location = new System.Drawing.Point(6, 6);
-			this.dataGridView2.Name = "dataGridView2";
-			this.dataGridView2.Size = new System.Drawing.Size(788, 572);
-			this.dataGridView2.TabIndex = 0;
+			this.dataGridViewProtag.BackgroundColor = System.Drawing.Color.White;
+			this.dataGridViewProtag.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridViewProtag.Location = new System.Drawing.Point(6, 6);
+			this.dataGridViewProtag.MultiSelect = false;
+			this.dataGridViewProtag.Name = "dataGridViewProtag";
+			this.dataGridViewProtag.ReadOnly = true;
+			this.dataGridViewProtag.Size = new System.Drawing.Size(788, 572);
+			this.dataGridViewProtag.TabIndex = 1;
 			// 
 			// Form1
 			// 
@@ -541,7 +510,7 @@
 			this.MaximizeBox = false;
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Form1";
+			this.Text = "Film";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.hopeTabPage1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
@@ -549,7 +518,7 @@
 			this.grpUpdate.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).EndInit();
 			this.tabPage5.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridViewProtag)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -558,7 +527,6 @@
 
         private ReaLTaiizor.Controls.HopeTabPage hopeTabPage1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dataGridViewFilms;
         private ReaLTaiizor.Controls.HopeNumeric numHours;
         private ReaLTaiizor.Controls.HopeTextBox txtName;
@@ -578,10 +546,8 @@
         private ReaLTaiizor.Controls.HeaderLabel headerLabel5;
         private ReaLTaiizor.Controls.HopeNotify notifyError;
         private ReaLTaiizor.Controls.HeaderLabel headerLabel6;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.DataGridView dataGridView2;
 		private ReaLTaiizor.Controls.HopeButton btnSave;
+		private System.Windows.Forms.DataGridView dataGridViewProtag;
 	}
 }
