@@ -20,7 +20,9 @@ namespace MySqlFilm
 		MySqlConnection conn = new MySqlConnection("Server=localhost;Database=film;Uid=root;Pwd=;");
         Film selectedFilm;
 		Dictionary<string, int> genres = new Dictionary<string, int>();
-		int? selectedId = null;
+		Dictionary<string, int> actors = new Dictionary<string, int>();
+		Dictionary<string, int> films = new Dictionary<string, int>();
+        int? selectedId = null;
 
 		public Form1()
         {
@@ -45,7 +47,7 @@ namespace MySqlFilm
             btnSave.Enabled = enabled;
 		}
 
-		private void loadFilms()
+		private void loadStuff()
 		{
 			try
 			{
@@ -92,12 +94,69 @@ namespace MySqlFilm
 			{
 				conn.Close();
 			}
-		}
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(
+                    "SELECT id_film, nome FROM film;",
+                    conn
+                );
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+				films.Clear();
+				cmbFilm.Items.Clear();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int id = int.Parse(dr["id_film"].ToString());
+                    string name = dr["nome"].ToString();
+                    films.Add(name, id);
+                    cmbFilm.Items.Add(name);
+                }
+            }
+            catch
+            {
+                showError("Impossibile comunicare con il database");
+            }
+            finally
+            {
+                conn.Close();
+            }
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(
+                    "SELECT id_attore, nome, cognome FROM attori;",
+                    conn
+                );
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                actors.Clear();
+                cmbActor.Items.Clear();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int id = int.Parse(dr["id_attore"].ToString());
+                    string fullName = dr["nome"].ToString() + " " + dr["cognome"].ToString();
+                    actors.Add(fullName, id);
+                    cmbActor.Items.Add(fullName);
+                }
+            }
+            catch
+            {
+                showError("Impossibile comunicare con il database");
+            }
+            finally
+            {
+                conn.Close();
+            }
 
-		private void Form1_Load(object sender, EventArgs e)
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
 		{
 			enableInputs(false);
-			loadFilms();
+			loadStuff();
 			try
 			{
 				conn.Open();
@@ -237,7 +296,7 @@ namespace MySqlFilm
 				conn.Close();
 				enableInputs(false);
 				selectedId = null;
-				loadFilms();
+				loadStuff();
 			}
 
 		}
@@ -245,8 +304,13 @@ namespace MySqlFilm
 		private void hopeButton1_Click(object sender, EventArgs e)
 		{
 			enableInputs(false);
-			Form2 f = new Form2(conn, genres, loadFilms);
+			Form2 f = new Form2(conn, genres, loadStuff);
 			f.Show();
 		}
-	}
+
+        private void btnSaveRecitare_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
