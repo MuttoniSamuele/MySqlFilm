@@ -29,11 +29,11 @@ namespace MySqlFilm
             InitializeComponent();
         }
 
-        private void showError(string msg, bool warning = false)
+        private void showError(HopeNotify notify, string msg, bool warning = false)
         {
-            notifyError.Text = msg;
-            notifyError.Visible = true;
-			notifyError.Type = warning ? HopeNotify.AlertType.Warning : HopeNotify.AlertType.Error;
+			notify.Text = msg;
+			notify.Visible = true;
+			notify.Type = warning ? HopeNotify.AlertType.Warning : HopeNotify.AlertType.Error;
         }
 
         private void enableInputs(bool enabled)
@@ -60,7 +60,7 @@ namespace MySqlFilm
 			}
 			catch
 			{
-				showError("Impossibile comunicare con il database");
+				showError(notifyError, "Impossibile caricare i film dal database");
 			}
 			finally
 			{
@@ -88,7 +88,7 @@ namespace MySqlFilm
 			}
 			catch
 			{
-				showError("Impossibile comunicare con il database");
+				showError(notifyError, "Impossibile caricare gli attori/protag dal database");
 			}
 			finally
 			{
@@ -116,7 +116,7 @@ namespace MySqlFilm
             }
             catch
             {
-                showError("Impossibile comunicare con il database");
+                showError(notifyError, "Impossibile caricare la lista dei film dal database");
             }
             finally
             {
@@ -144,7 +144,7 @@ namespace MySqlFilm
             }
             catch
             {
-                showError("Impossibile comunicare con il database");
+                showError(notifyError, "Impossibile caricare la lista degli attori dal database");
             }
             finally
             {
@@ -175,7 +175,7 @@ namespace MySqlFilm
 			}
 			catch
 			{
-				showError("Impossibile comunicare con il database");
+				showError(notifyError, "Impossibile comunicare con il database");
 			}
 			finally
 			{
@@ -235,7 +235,7 @@ namespace MySqlFilm
 		{
 			if (dataGridViewFilms.SelectedRows.Count == 0)
             {
-                showError("Seleziona un film da eliminare", true);
+                showError(notifyError, "Seleziona un film da eliminare", true);
                 return;
             }
 			int filmId = Convert.ToInt32(dataGridViewFilms.SelectedRows[0].Cells["id_film"].Value);
@@ -252,11 +252,12 @@ namespace MySqlFilm
 			}
 			catch
 			{
-				showError("Impossibile comunicare con il database");
+				showError(notifyError, "Il record e' parte di relazioni");
 			}
 			finally
 			{
 				conn.Close();
+				loadStuff();
 			}
 		}
 		private void btnSave_Click(object sender, EventArgs e)
@@ -289,7 +290,7 @@ namespace MySqlFilm
 			}
 			catch
 			{
-				showError("Impossibile comunicare con il database");
+				showError(notifyError, "Impossibile comunicare con il database");
 			}
 			finally
 			{
@@ -310,7 +311,31 @@ namespace MySqlFilm
 
         private void btnSaveRecitare_Click(object sender, EventArgs e)
         {
-
-        }
-    }
+			int actorId = actors[cmbActor.Text];
+			int filmId = films[cmbFilm.Text];
+			string role = cmbRole.Text;
+			try
+			{
+				using (MySqlCommand cmd = new MySqlCommand(
+					"INSERT INTO recitare (id_attore, id_film, ruolo) VALUES (@id_attore, @id_film, @ruolo)",
+					conn
+				))
+				{
+					cmd.Parameters.AddWithValue("@id_attore", actorId);
+					cmd.Parameters.AddWithValue("@id_film", filmId);
+					cmd.Parameters.AddWithValue("@ruolo", role);
+					conn.Open();
+					cmd.ExecuteNonQuery();
+				}
+			}
+			catch
+			{
+				showError(notifyErrorRecitare, "Questo record esista gia'");
+			}
+			finally
+			{
+				conn.Close();
+			}
+		}
+	}
 }
